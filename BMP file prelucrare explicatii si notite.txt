@@ -1,0 +1,25 @@
+fiecare linie din color table ocupa 4 bytes, in ordinea blue, green, red si la final sunt bytes de padding
+A 24-bit bitmap with Width=1, would have 3 bytes of data per row (blue, green, red) and 1 byte of padding
+Width=2 would have 6 bytes of data and 2 bytes of padding
+Width=3 would have 9 bytes of data and 3 bytes of padding
+Width=4 would have 12 bytes of data and no padding.
+
+liniile unui BMP sunt multiplii de 4. in binar, un nr multiplu de 4 se termina in 00
+folosind ~3 = 11111100 -> aproximeaza in jos la un nr multiplu de 4, daca adaugam +3 la inceput, aproximeaza in sus la cel mai apropiat multiplu de 4
+    int rowSize = (width*3+3) & ~3;
+
+formula grayscale
+gray = 0.114 * blue + 0.587 * green + 0.299 * red
+
+verificare fread fwrite
+
+LISTA APELARE PRG
+./prog info imagine_2.bmp
+./prog grayscale imagine_2.bmp output.bmp   
+./prog invert imagine_2.bmp output.bmp
+./prog brightness imagine_2.bmp output.bmp -50%
+./prog blur input.bmp output.bmp
+./prog crop input.bmp output.bmp 20 20 300 250
+./prog rotate input.bmp output.bmp 180
+
+Project that handles images in the BMP format as binary files. An in-terminal program that shows particular information about the image, adds a grayscale filter, an inverted colours filter, a blur filter. For every filter added, a new image is created or the initial one can be overwritten. In addition, it can crop an image to the specified dimensions, brightens the image by a specified percentage and rotates the image by 90 or 180 degrees.
